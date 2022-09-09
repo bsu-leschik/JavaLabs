@@ -1,7 +1,5 @@
 package Lab0;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Lab0 {
@@ -30,8 +28,6 @@ public class Lab0 {
             throw new IllegalArgumentException("You need to enter 2 parameters!");
         }
 
-        System.out.println(x + " " + error);
-
         return new double[] {x, error};
     }
 
@@ -42,7 +38,6 @@ public class Lab0 {
 
         while (current > error){
             current *= (x * x) / (2 * k);
-            System.out.println(current);
             result += current;
             k++;
         }

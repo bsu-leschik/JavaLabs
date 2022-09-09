@@ -1,10 +1,12 @@
 package Lab0;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Lab0 {
 
-    public static void mainLab0(){
+    public static void main(String[] args){
         double[] parameters;
         parameters = getParametersFromConsole();
 
@@ -17,11 +19,16 @@ public class Lab0 {
         double x, error;
 
         System.out.print("Enter 2 values, number is the first parameter, error the second:");
-        Scanner reader= new Scanner(System.in);
 
+        Scanner reader = new Scanner(System.in);
+        reader = new Scanner(reader.nextLine());
 
         x = reader.nextDouble();
         error = reader.nextDouble();
+
+        if(reader.hasNext()){
+            throw new IllegalArgumentException("You need to enter 2 parameters!");
+        }
 
         System.out.println(x + " " + error);
 

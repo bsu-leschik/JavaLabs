@@ -36,7 +36,7 @@ public class Lab0 {
         double current = x * x / 2, result = current;
         System.out.println(current);
 
-        while (current > error){
+        while (Math.abs(current) > error){
             current *= (x * x) / (2 * k);
             result += current;
             k++;

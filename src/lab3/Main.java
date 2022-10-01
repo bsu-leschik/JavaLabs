@@ -10,6 +10,8 @@ public class Main {
     public static void main(String[] args){
         Matrix reversed;
         try{
+
+            //../../../../../../../home/skalem/IdeaProjects/JavaLabs/src/lab3/matrix.txt
             Matrix matrix = new Matrix(readFile("/home/skalem/IdeaProjects/JavaLabs/src/lab3/matrix.txt"));
             reversed = reverse(matrix);
         }
@@ -77,6 +79,9 @@ public class Main {
         DoubleMatrix doubleMatrix = new DoubleMatrix(matrix, attachedMatrix);
 
         for (int i = 0; i < matrix.getMatrix().length - 1; i++) {
+            if (matrix.getMatrix()[i][i] == 0){
+                removeZeroFromStart(matrix, i);
+            }
             doubleMatrix.divideLine(i, matrix.getMatrix()[i][i]);
             for (int i1 = i + 1; i1 < matrix.getMatrix().length; i1++) {
                 doubleMatrix.fullSubLines(i1, i);
@@ -110,5 +115,16 @@ public class Main {
             }
         }
         return true;
+    }
+
+    private static void removeZeroFromStart(Matrix matrix, int currentLine) throws NotValidMatrixException{
+        for (int i = 0; i < matrix.getMatrix().length; i++) {
+            if (matrix.getMatrix()[currentLine][i] != 0){
+                matrix.swapRows(i, currentLine);
+                return;
+            }
+        }
+        throw new NotValidMatrixException("Matrix is linear");
+
     }
 }

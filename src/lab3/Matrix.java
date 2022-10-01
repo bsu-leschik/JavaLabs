@@ -11,13 +11,38 @@ public class Matrix {
     }
 
     private boolean isMatrixValid(){
+        if (matrix == null || matrix.length == 1 || matrix.length == 0){
+            return false;
+        }
+
         int length = matrix.length;
+
         for (double[] ints : matrix) {
             if (ints.length != length) {
                 return false;
             }
         }
-        return matrix.length != 0;
+        return isActuallySquare();
+    }
+
+    private boolean isActuallySquare(){
+        int countL = 0, countR = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int i1 = 0; i1 < matrix.length; i1++) {
+                if(matrix[i][i1] == 0){
+                    countL++;
+                }
+                if(matrix[i1][i] == 0){
+                    countR++;
+                }
+            }
+            if (countL == matrix.length || countR == matrix.length){
+                return false;
+            }
+            countR = 0;
+            countL = 0;
+        }
+        return true;
     }
 
     public void divideLine(int line, double number){
@@ -47,6 +72,18 @@ public class Matrix {
         return this.matrix;
     }
 
+    public void swapRows(int row1, int row2){
+        double[] row1Ints = new double[this.matrix.length];
+        double[] row2Ints = new double[this.matrix.length];
+        for (int i = 0; i < this.matrix.length; i++) {
+            row1Ints[i] = matrix[i][row1];
+            row2Ints[i] = matrix[i][row2];
+        }
+        for (int i = 0; i < this.matrix.length; i++) {
+            matrix[i][row1] = row2Ints[i];
+            matrix[i][row2] = row1Ints[i];
+        }
+    }
 
 
 }

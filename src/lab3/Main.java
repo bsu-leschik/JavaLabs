@@ -8,20 +8,20 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args){
-        Matrix matrix;
+        Matrix reversed;
         try{
-            matrix = new Matrix(readFile("/home/skalem/IdeaProjects/JavaLabs/src/lab3/matrix.txt"));
+            Matrix matrix = new Matrix(readFile("/home/skalem/IdeaProjects/JavaLabs/src/lab3/matrix.txt"));
+            reversed = reverse(matrix);
         }
         catch (NotValidMatrixException | NumberFormatException | FileNotFoundException e){
             System.err.println(e.getMessage());
             return;
         }
-        Matrix reversed = reverse(matrix);
         writeMatrix(reversed);
 
     }
 
-    private static int[][] readFile(String path) throws FileNotFoundException {
+    private static double[][] readFile(String path) throws FileNotFoundException {
         File textFile = new File(path);
         Scanner scanner = new Scanner(textFile);
 
@@ -30,29 +30,29 @@ public class Main {
             lines.add(scanner.nextLine());
         }
 
-        int[][] intLines = new int[lines.size()][];
+        double[][] intLines = new double[lines.size()][];
         for (int i = 0; i < lines.size(); i++){
-            intLines[i] = getIntLine(lines.get(i));
+            intLines[i] = getDoubleLine(lines.get(i));
         }
 
         return intLines;
     }
 
-    private static int[] getIntLine(String line){
+    private static double[] getDoubleLine(String line){
         StringTokenizer tokenizer = new StringTokenizer(line, " ", false);
 
-        int[] intLine = new int[tokenizer.countTokens()];
+        double[] doubleLine = new double[tokenizer.countTokens()];
         int i = 0;
 
         while(tokenizer.hasMoreElements()){
             String current = tokenizer.nextToken();
-            intLine[i] = Integer.parseInt(current);
+            doubleLine[i] = Double.parseDouble(current);
             i++;
         }
-        return intLine;
+        return doubleLine;
     }
 
-    public static void getSimpleMatrix(int[][] matrix){
+    public static void getSimpleMatrix(double[][] matrix){
         for (int i = 0; i < matrix.length; i++) {
             for (int i1 = 0; i1 < matrix[i].length; i1++) {
                 if (i == i1){
@@ -65,8 +65,8 @@ public class Main {
         }
     }
 
-    public static Matrix reverse(Matrix matrix){
-        int[][] attachedMatrixArr = new int[matrix.getMatrix().length][matrix.getMatrix().length];
+    public static Matrix reverse(Matrix matrix) throws  NotValidMatrixException{
+        double[][] attachedMatrixArr = new double[matrix.getMatrix().length][matrix.getMatrix().length];
         getSimpleMatrix(attachedMatrixArr);
         Matrix attachedMatrix;
         try {
@@ -77,15 +77,19 @@ public class Main {
         DoubleMatrix doubleMatrix = new DoubleMatrix(matrix, attachedMatrix);
 
         for (int i = 0; i < matrix.getMatrix().length - 1; i++) {
-            matrix.divideLine(0, matrix.getMatrix()[i][i]);
-            attachedMatrix.divideLine(0, matrix.getMatrix()[i][i]);
+            doubleMatrix.divideLine(i, matrix.getMatrix()[i][i]);
             for (int i1 = i + 1; i1 < matrix.getMatrix().length; i1++) {
-                doubleMatrix.fullSubLines(i1, 0);
+                doubleMatrix.fullSubLines(i1, i);
             }
             for (int i1 = i + 1; i1 < matrix.getMatrix().length; i1++) {
-                doubleMatrix.fullSubRaws(i1, 0);
+                doubleMatrix.fullSubRaws(i1, i);
             }
         }
+
+        if (!isSimpleLinearDependant(matrix)){
+            throw new NotValidMatrixException("Matrix is linear dependant");
+        }
+
 
         return attachedMatrix;
     }
@@ -97,5 +101,14 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    private static boolean isSimpleLinearDependant(Matrix matrix){
+        for (int i = 0; i < matrix.getMatrix().length; i++) {
+            if (matrix.getMatrix()[i][i] == 0){
+                return false;
+            }
+        }
+        return true;
     }
 }

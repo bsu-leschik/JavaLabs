@@ -15,10 +15,23 @@ public class Main {
             return;
         }
 
+        int x;
+        try{
+            x = getX(args);
+        }
+        catch(NoArgumentException exception){
+            System.err.println(exception.getMessage());
+            return;
+        }
+        catch (NumberFormatException e){
+            System.err.println("X is not a number");
+            return;
+        }
+
         StringTokenizer parsedLine = new StringTokenizer(line, "/", false);
         double result = 0;
         try {
-            result = getResult(parsedLine, 1);
+            result = getResult(parsedLine, x);
         } catch (NoArgumentException e) {
             System.err.println(e.getMessage());
             return;
@@ -30,7 +43,16 @@ public class Main {
         if (args.length < 1){
             throw new NoArgumentException("No data was entered");
         }
+
         return args[0];
+    }
+
+    private static int getX(String[] args) throws NoArgumentException{
+        if (args.length < 2){
+            throw new NoArgumentException("No x value was entered");
+        }
+
+        return Integer.parseInt(args[1]);
     }
 
     private static double getResult(StringTokenizer parsedLine, double xVal) throws NoArgumentException{
@@ -40,18 +62,18 @@ public class Main {
             throw new NoArgumentException("String must not be empty");
         }
 
-        StringBuilder x = new StringBuilder("x");
+        String x = "x";
         double result;
 
         if (Objects.equals(parsedLine.nextToken(), "x")){
-            result = 1;
+            result = xVal;
         }
         else {
             result = Integer.parseInt(parsedLine.nextToken());
         }
 
         for (int i = 0;i < length - 1; i++){
-            StringBuilder token = new StringBuilder(parsedLine.nextToken());
+            String token = parsedLine.nextToken();
             if (token.compareTo(x) == 0){
                 result /= xVal;
             }
@@ -62,6 +84,5 @@ public class Main {
 
         return result;
     }
-
 }
 

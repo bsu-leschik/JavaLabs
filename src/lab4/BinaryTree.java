@@ -9,14 +9,6 @@ public class BinaryTree <T extends Comparable<T>>{
         Node(T element){
             this.element = element;
         }
-
-        public void addLeft(T element){
-            left = new Node(element);
-        }
-
-        public void addRight(T element){
-            right = new Node(element);
-        }
     }
 
     private T current;

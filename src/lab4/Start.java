@@ -46,10 +46,13 @@ public class Start {
         binaryTree.addElement(new Number(110));
         binaryTree.addElement(new Number(171));
         binaryTree.addElement(new Number(250));
+        binaryTree.addElement(new Number(220));
         binaryTree.goPLR();
-        binaryTree.goLRP();
-        binaryTree.goLPR();
-        System.out.println(binaryTree.findElement(new Number(4)));
-        System.out.println(binaryTree.findElement(new Number(6)).element);
+//        binaryTree.goLRP();
+//        binaryTree.goLPR();
+//        binaryTree.goLPR();
+
+        System.out.println(binaryTree.findElement(new Number(111)));
+        //System.out.println(binaryTree.findElement(new Number(111)).element);
     }
 }

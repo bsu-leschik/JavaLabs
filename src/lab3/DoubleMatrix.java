@@ -24,4 +24,17 @@ public class DoubleMatrix {
         matrix1.divideLine(line, number);
         matrix2.divideLine(line, number);
     }
+
+    public void swapLines(int line1, int line2){
+        matrix1.swapLines(line1, line2);
+        matrix2.swapLines(line1, line2);
+    }
+
+    public int getHeight(){
+        return matrix1.getMatrix().length;
+    }
+
+    public int getLength(){
+        return 2*matrix1.getMatrix().length;
+    }
 }

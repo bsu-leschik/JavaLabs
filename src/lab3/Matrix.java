@@ -10,7 +10,7 @@ public class Matrix {
         }
     }
 
-    private boolean isMatrixValid(){
+    private boolean isMatrixValid() throws NotValidMatrixException{
         if (matrix == null || matrix.length == 1 || matrix.length == 0){
             return false;
         }
@@ -18,8 +18,11 @@ public class Matrix {
         int length = matrix.length;
 
         for (double[] ints : matrix) {
-            if (ints.length != length) {
-                return false;
+            if (ints.length < length) {
+                throw new NotValidMatrixException("Line is too small");
+            }
+            else if(ints.length > length){
+                throw new NotValidMatrixException("Line is too big");
             }
         }
         return isActuallySquare();
@@ -85,5 +88,9 @@ public class Matrix {
         }
     }
 
-
+    public void swapLines(int line1Index, int line2Index){
+        double [] line1 = matrix[line1Index];
+        matrix[line1Index] = matrix[line2Index];
+        matrix[line2Index] = line1;
+    }
 }

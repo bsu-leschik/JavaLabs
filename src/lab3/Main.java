@@ -80,20 +80,28 @@ public class Main {
 
         for (int i = 0; i < matrix.getMatrix().length - 1; i++) {
             if (matrix.getMatrix()[i][i] == 0){
-                removeZeroFromStart(matrix, i);
+                removeZeroFromStart(doubleMatrix, i);
             }
             doubleMatrix.divideLine(i, matrix.getMatrix()[i][i]);
             for (int i1 = i + 1; i1 < matrix.getMatrix().length; i1++) {
                 doubleMatrix.fullSubLines(i1, i);
-            }
-            for (int i1 = i + 1; i1 < matrix.getMatrix().length; i1++) {
-                doubleMatrix.fullSubRaws(i1, i);
             }
         }
 
         if (!isSimpleLinearDependant(matrix)){
             throw new NotValidMatrixException("Matrix is linear dependant");
         }
+
+        doubleMatrix.divideLine(matrix.getMatrix().length - 1,
+                doubleMatrix.matrix1.getMatrix()[matrix.getMatrix().length - 1][matrix.getMatrix().length - 1]);
+
+        for (int i = matrix.getMatrix().length - 1; i >= 0; i--) {
+            for (int i1 = i - 1; i1 >= 0; i1--) {
+                doubleMatrix.fullSubLines(i1, i);
+            }
+        }
+
+
 
 
         return attachedMatrix;
@@ -117,10 +125,10 @@ public class Main {
         return true;
     }
 
-    private static void removeZeroFromStart(Matrix matrix, int currentLine) throws NotValidMatrixException{
-        for (int i = 0; i < matrix.getMatrix().length; i++) {
-            if (matrix.getMatrix()[currentLine][i] != 0){
-                matrix.swapRows(i, currentLine);
+    private static void removeZeroFromStart(DoubleMatrix matrix, int currentLine) throws NotValidMatrixException{
+        for (int i = 0; i < matrix.getHeight(); i++) {
+            if (matrix.matrix1.getMatrix()[i][currentLine] != 0){
+                matrix.swapLines(i, currentLine);
                 return;
             }
         }

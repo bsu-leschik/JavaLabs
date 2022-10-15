@@ -36,7 +36,6 @@ public abstract class Series {
             sb.append(calculateElement(i));
             sb.append(" ");
         }
-        sb.append("\n");
         return sb.toString();
     }
     public void saveToFile(File file) throws IOException {

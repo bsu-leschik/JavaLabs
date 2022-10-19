@@ -8,7 +8,13 @@ public class Lab5 {
     public static void main(String[] args){
         Series s;
         try{
-            if (args.length < 5){
+
+            if (args.length == 1 && args[0].equalsIgnoreCase("w")){
+                Window window = new Window();
+                return;
+            }
+
+            if (args.length == 4){
                 throw new IllegalArgumentException("Too small amount of arguments");
             }
 

@@ -82,9 +82,11 @@ public class Window extends JFrame {
             }
         });
         pathFieldPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        pathFieldPanel.add(pathLabel);
 
+        pathFieldPanel.add(pathLabel);
         pathFieldPanel.add(pathField);
+
+
         this.add(pathFieldPanel);
     }
 
@@ -196,7 +198,7 @@ public class Window extends JFrame {
         final JLabel elementsLabel = new JLabel(name);
         elementsLabel.setVisible(false);
         final JTextArea elementsOutput = new JTextArea(1, columns);
-        elementsOutput.setEnabled(false);
+        elementsOutput.setEditable(false);
         JScrollPane scroller = new JScrollPane(elementsOutput);
         scroller.createVerticalScrollBar();
         scroller.setVisible(false);

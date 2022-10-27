@@ -2,9 +2,12 @@ package lab6;
 
 public class Lab6 {
     public static void main(String[] args){
-        ButtonControllerWindow w = new ButtonControllerWindow();
-        w.showWindow();
-//        TryClickButtonWindow window = new TryClickButtonWindow();
-//        window.showWindow();
+        if (args.length == 0){
+            ButtonControllerWindow w = new ButtonControllerWindow();
+            w.showWindow();
+            return;
+        }
+        TryClickButtonWindow window = new TryClickButtonWindow();
+        window.showWindow();
     }
 }

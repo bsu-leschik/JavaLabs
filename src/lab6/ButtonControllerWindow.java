@@ -100,13 +100,17 @@ public class ButtonControllerWindow extends JFrame {
         button.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                button.setText(button.getText() + e.getKeyChar());
+                if (e.getKeyChar() != '\b') {
+                    button.setText(button.getText() + e.getKeyChar());
+                }
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+                    if (button.getText().isBlank()) return;
                     button.setText(button.getText().substring(0, button.getText().length() - 1));
+                    return;
                 }
                 if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
                     ctrlPressed = true;

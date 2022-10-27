@@ -2,6 +2,8 @@ package lab6;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
@@ -35,16 +37,19 @@ public class TryClickButtonWindow extends JFrame {
 
         button = new JButton("No");
         final JButton goodButton = new JButton("Yes");
+        final JLabel label = new JLabel("Good student!");
+        label.setVisible(false);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(goodButton);
-        buttonPanel.add(button);
+        final JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        textPanel.add(label);
+        goodButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setVisible(true);
+                pack();
+            }
+        });
 
-        mainPanel.add(text);
-        mainPanel.add(buttonPanel);
-    }
-
-    private void initListeners(){
         button.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -54,33 +59,39 @@ public class TryClickButtonWindow extends JFrame {
             @Override
             public void mouseMoved(MouseEvent e) {
                 button.setLocation(getAppropriateX(), getAppropriateY());
+                label.setVisible(false);
             }
 
             private int getAppropriateX(){
-                int newX;
                 if (button.getX() + 2*button.getWidth() < getWidth()){
-                    newX = button.getX() + 2*button.getWidth();
-                } else if (button.getX() - button.getWidth() > 0) {
-                    newX = button.getX() - button.getWidth();
+                    return button.getX() + 2*button.getWidth();
                 }
-                else {
-                    newX = button.getX();
+                if (button.getX() - button.getWidth() > 0) {
+                    return button.getX() - button.getWidth();
                 }
-                return newX;
+                return button.getX();
             }
 
             private int getAppropriateY(){
-                int newY;
-                if (button.getY() + button.getHeight() < getBounds().height){
-                    newY = button.getY() + button.getHeight();
-                } else if (button.getLocationOnScreen().y - 2*button.getHeight() > 0) {
-                    newY = button.getY() - button.getHeight();
+                if (button.getY() - 2*button.getHeight() > 0) {
+                    return button.getY() - button.getHeight();
                 }
-                else {
-                    newY = button.getY();
+                if (button.getY() + button.getHeight() < getHeight()){
+                    return button.getY() + button.getHeight();
                 }
-                return newY;
+                return button.getY();
             }
         });
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(goodButton);
+        buttonPanel.add(button);
+
+        mainPanel.add(text);
+        mainPanel.add(buttonPanel);
+        mainPanel.add(textPanel);
+    }
+
+    private void initListeners(){
+
     }
 }

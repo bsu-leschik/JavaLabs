@@ -11,8 +11,6 @@ public class ButtonControllerWindow extends JFrame {
     JTextField xOutput;
     JTextField yOutput;
 
-    boolean ctrlPressed = false;
-
     public ButtonControllerWindow() {
         super("Button controller");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -20,6 +18,7 @@ public class ButtonControllerWindow extends JFrame {
 
         initCoordinates();
         initButton();
+
         initListeners();
     }
 
@@ -29,7 +28,7 @@ public class ButtonControllerWindow extends JFrame {
 
     private void configureWindow() {
         setMinimumSize(new Dimension(480, 300));
-        mainPanel = new JPanel(new SpringLayout());
+        mainPanel = new JPanel(null);
         this.add(mainPanel);
     }
 
@@ -82,7 +81,7 @@ public class ButtonControllerWindow extends JFrame {
             @Override
             public void mouseDragged(MouseEvent e) {
                 mouseMoved(e);
-                if (ctrlPressed) {
+                if (e.isControlDown()) {
                     button.setLocation(new Point(e.getXOnScreen() - mainPanel.getLocationOnScreen().x, e.getYOnScreen() - mainPanel.getLocationOnScreen().y));
                 }
             }
@@ -100,37 +99,30 @@ public class ButtonControllerWindow extends JFrame {
         button.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar() != '\b') {
+                if (e.getKeyChar() == '\b'){
+                    if (button.getText().isBlank()) return;
+                    button.setText(button.getText().substring(0, button.getText().length() - 1));
+                }
+                else {
                     button.setText(button.getText() + e.getKeyChar());
                 }
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
-                    if (button.getText().isBlank()) return;
-                    button.setText(button.getText().substring(0, button.getText().length() - 1));
-                    return;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-                    ctrlPressed = true;
-                }
+
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-                    ctrlPressed = false;
-                }
             }
         });
     }
 
     private void initButton() {
         button = new JButton();
-        button.setPreferredSize(new Dimension(this.getWidth() / 5, this.getHeight() / 10));
-        mainPanel.add(button, BorderLayout.CENTER);
-
+        button.setSize(new Dimension(this.getWidth() / 5, this.getHeight() / 10));
+        mainPanel.add(button);
     }
 
 }

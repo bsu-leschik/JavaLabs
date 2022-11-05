@@ -1,5 +1,7 @@
 package lab7;
 
+import lab6.TryClickButtonWindow;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +20,7 @@ public class Drawer extends JPanel implements MouseMotionListener {
 
     Color currentColor;
 
+    BufferedImage imgTemp;
     BufferedImage image;
 
     ArrayList<Line> lines = new ArrayList<>();
@@ -38,20 +41,8 @@ public class Drawer extends JPanel implements MouseMotionListener {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        if (lastPoint == null) {
+        if (lastPoint == null || image == null) {
             return;
-        }
-
-        if (image == null){
-            image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
-            this.paint(image.getGraphics());
-        }
-
-        Graphics bufferGraphics = image.getGraphics();
-
-        for (Line line : lines) {
-            bufferGraphics.setColor(line.getColor());
-            bufferGraphics.drawLine(line.a.x, line.a.y, line.b.x, line.b.y);
         }
 
         g.drawImage(image, 0, 0, this);
@@ -66,6 +57,21 @@ public class Drawer extends JPanel implements MouseMotionListener {
             previousPoint = lastPoint;
         }
         lines.add(new Line(previousPoint, lastPoint, this.currentColor));
+
+
+
+        if (image == null){
+            image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            this.paint(image.getGraphics());
+        }
+
+        Graphics bufferGraphics = image.getGraphics();
+
+        for (Line line : lines) {
+            bufferGraphics.setColor(line.getColor());
+            bufferGraphics.drawLine(line.a.x, line.a.y, line.b.x, line.b.y);
+        }
+
         repaint();
 
     }
@@ -83,8 +89,15 @@ public class Drawer extends JPanel implements MouseMotionListener {
     }
 
     public void loadImage(File file) throws IOException {
-        this.image =  ImageIO.read(file);
+        this.imgTemp =  ImageIO.read(file);
+        if (image == null){
+            image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            this.paint(image.getGraphics());
+        }
+        this.image.getGraphics().drawImage(imgTemp, 0, 0, this);
         this.lines.clear();
+        lastPoint = null;
+        previousPoint = null;
         setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
         this.repaint();
     }

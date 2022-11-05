@@ -42,27 +42,32 @@ public class Drawer extends JPanel implements MouseMotionListener {
             return;
         }
 
-        if (previousPoint == null){
-            previousPoint = lastPoint;
+        if (image == null){
+            image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            this.paint(image.getGraphics());
         }
 
-        lines.add(new Line(previousPoint, lastPoint, this.currentColor));
-
-        if (image != null){
-            g.drawImage(image, 0, 0, this);
-        }
+        Graphics bufferGraphics = image.getGraphics();
 
         for (Line line : lines) {
-            g.setColor(line.getColor());
-            g.drawLine(line.a.x, line.a.y, line.b.x, line.b.y);
+            bufferGraphics.setColor(line.getColor());
+            bufferGraphics.drawLine(line.a.x, line.a.y, line.b.x, line.b.y);
         }
+
+        g.drawImage(image, 0, 0, this);
+
         previousPoint = lastPoint;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         this.lastPoint = e.getPoint();
+        if (previousPoint == null){
+            previousPoint = lastPoint;
+        }
+        lines.add(new Line(previousPoint, lastPoint, this.currentColor));
         repaint();
+
     }
 
     @Override

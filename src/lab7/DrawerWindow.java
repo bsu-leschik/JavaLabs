@@ -78,7 +78,7 @@ public class DrawerWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                if (fileChooser.showOpenDialog(drawPanel.getParent()) == JFileChooser.APPROVE_OPTION){
+                if (fileChooser.showSaveDialog(drawPanel.getParent()) == JFileChooser.APPROVE_OPTION){
                     try {
                         drawPanel.saveToFile(fileChooser.getSelectedFile());
                         button.setBackground(null);

@@ -99,7 +99,7 @@ public class ButtonControllerWindow extends JFrame {
         button.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar() == '\b'){
+                if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE){
                     if (button.getText().isBlank()) return;
                     button.setText(button.getText().substring(0, button.getText().length() - 1));
                 }

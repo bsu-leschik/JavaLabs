@@ -1,7 +1,5 @@
 package lab7;
 
-import lab6.TryClickButtonWindow;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

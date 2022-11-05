@@ -39,7 +39,13 @@ public class Drawer extends JPanel implements MouseMotionListener {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+
+        if (image == null){
+            return;
+        }
+
         g.drawImage(image, 0, 0, this);
+
         previousPoint = lastPoint;
     }
 

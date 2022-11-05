@@ -39,12 +39,7 @@ public class Drawer extends JPanel implements MouseMotionListener {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        if (lastPoint == null || image == null) {
-            return;
-        }
-
         g.drawImage(image, 0, 0, this);
-
         previousPoint = lastPoint;
     }
 
@@ -88,15 +83,18 @@ public class Drawer extends JPanel implements MouseMotionListener {
 
     public void loadImage(File file) throws IOException {
         this.imgTemp =  ImageIO.read(file);
-        if (image == null){
-            image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
-            this.paint(image.getGraphics());
-        }
-        this.image.getGraphics().drawImage(imgTemp, 0, 0, this);
         this.lines.clear();
+
+        image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+        this.paint(image.getGraphics());
+
+        this.image.getGraphics().drawImage(imgTemp, 0, 0, this);
+
         lastPoint = null;
         previousPoint = null;
+
         setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
+
         this.repaint();
     }
 }

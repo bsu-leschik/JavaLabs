@@ -6,36 +6,67 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ListsApp extends JPanel {
+    DefaultListModel<String> leftListModel;
+    DefaultListModel<String> rightListModel;
+
     JList<String> leftList;
     JList<String> rightList;
 
     ListsApp(){
         super();
+        setLayout(new BorderLayout());
         initComponents();
     }
 
     private void initComponents(){
-        add(new JList<String>(), BorderLayout.EAST);
-        add(new JList<String>(), BorderLayout.WEST);
+        leftListModel = initListComponents(10);
+        rightListModel = initListComponents(3);
 
+        leftList = new JList<>(leftListModel);
+        rightList = new JList<>(rightListModel);
+
+        add(leftList, BorderLayout.WEST);
+        add(rightList, BorderLayout.EAST);
+
+        initButtons();
 
     }
 
     private void initButtons(){
-        initButton(BorderLayout.NORTH);
-        initButton(BorderLayout.SOUTH);
+        JPanel panel = new JPanel(new BorderLayout());
+
+        initButton(BorderLayout.NORTH, panel);
+        initButton(BorderLayout.SOUTH, panel);
+
+        add(panel, BorderLayout.CENTER);
     }
 
-    private void initButton(String position){
+    private void initButton(String position, JPanel panel){
         final JButton button = new JButton(getBtnTextFromPosition(position));
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (leftList.getComponentCount() == 0){
+                if (position.equals(BorderLayout.NORTH)) {
+                    if (!leftList.getSelectedValuesList().isEmpty()) {
+                        for (String component : leftList.getSelectedValuesList()) {
+                            rightListModel.addElement(component);
+                            leftListModel.removeElement(component);
+                        }
+                    }
+                }
 
+                if (position.equals((BorderLayout.SOUTH))) {
+                    if (!rightList.getSelectedValuesList().isEmpty()) {
+                        for (String component : rightList.getSelectedValuesList()) {
+                            leftListModel.addElement(component);
+                            rightListModel.removeElement(component);
+                        }
+                    }
                 }
             }
         });
+
+        panel.add(button, position);
     }
 
     private static String getBtnTextFromPosition(String position){
@@ -50,7 +81,11 @@ public class ListsApp extends JPanel {
         return null;
     }
 
-    private void transferLists(){
-
+    private DefaultListModel<String> initListComponents(int amount){
+        DefaultListModel<String> arrayList = new DefaultListModel<>();
+        for (int i = 0; i < amount; i++) {
+            arrayList.addElement(i + "");
+        }
+        return arrayList;
     }
 }

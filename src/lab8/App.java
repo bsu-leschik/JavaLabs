@@ -21,7 +21,8 @@ public class App extends JFrame {
 
     private void addComponents(){
         pane.addTab("Lists", new ListsApp());
-        pane.add("Grid", new GridApp());
-        pane.add("RadioButtons", new RadioButtonsApp());
+        pane.addTab("Grid", new GridApp());
+        pane.addTab("RadioButtons", new RadioButtonsApp());
+        this.add(pane);
     }
 }

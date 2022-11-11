@@ -22,7 +22,7 @@ public class App extends JFrame {
     private void addComponents(){
         pane.addTab("Lists", new ListsApp());
         pane.addTab("Grid", new GridApp(3));
-        pane.addTab("RadioButtons", new RadioButtonsApp());
+        pane.addTab("RadioButtons", new RadioButtonsApp(3));
         this.add(pane);
     }
 }

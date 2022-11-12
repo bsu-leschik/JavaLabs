@@ -1,17 +1,18 @@
 package lab8;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class RadioButtonsApp extends JPanel {
 
     final int AMOUNT_OF_BUTTONS;
+    Icon onChooseIcon, onEnterIcon, onEnterAndHoldIcon;
 
-    public RadioButtonsApp(int amountOfButtons){
+    public RadioButtonsApp(int amountOfButtons, Icon onChooseIcon, Icon onEnterIcon, Icon onEnterAndHoldIcon){
         super();
         AMOUNT_OF_BUTTONS  = amountOfButtons;
+        this.onChooseIcon = onChooseIcon;
+        this.onEnterIcon = onEnterIcon;
+        this.onEnterAndHoldIcon = onEnterAndHoldIcon;
         initButtons();
     }
 
@@ -19,20 +20,12 @@ public class RadioButtonsApp extends JPanel {
         ButtonGroup group = new ButtonGroup();
 
         for (int i = 0; i < AMOUNT_OF_BUTTONS; i++) {
-            JRadioButton radioButton = new JRadioButton();
+            JRadioButton radioButton = new JRadioButton(
+                    new ImageIcon("/home/skalem/FlappyBird/sprites/OtherTheme/Birds/secondBird0.png"));
 
-            radioButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    radioButton.setIcon(new ImageIcon("/home/skalem/Загрузки/free-icon-matrix-1808972.png"));
-                    for (Component component : getComponents()) {
-                        JRadioButton button = (JRadioButton) component;
-                        if (!button.equals(radioButton)) {
-                            button.setIcon(null);
-                        }
-                    }
-                }
-            });
+            radioButton.setSelectedIcon(onChooseIcon);
+            radioButton.setPressedIcon(onEnterAndHoldIcon);
+            radioButton.setRolloverIcon(onEnterIcon);
 
             group.add(radioButton);
             add(radioButton);

@@ -48,18 +48,20 @@ public class ListsApp extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (position.equals(BorderLayout.NORTH)) {
                     if (!leftList.getSelectedValuesList().isEmpty()) {
-                        for (String component : leftList.getSelectedValuesList()) {
-                            rightListModel.addElement(component);
-                            leftListModel.removeElement(component);
+                        int[] indices = leftList.getSelectedIndices();
+                        for (int i = leftList.getSelectedIndices().length - 1; i >= 0; i--) {
+                            rightListModel.addElement(leftListModel.elementAt(indices[i]));
+                            leftListModel.remove(indices[i]);
                         }
                     }
                 }
 
                 if (position.equals((BorderLayout.SOUTH))) {
                     if (!rightList.getSelectedValuesList().isEmpty()) {
-                        for (String component : rightList.getSelectedValuesList()) {
-                            leftListModel.addElement(component);
-                            rightListModel.removeElement(component);
+                        int[] indices = rightList.getSelectedIndices();
+                        for (int i = rightList.getSelectedIndices().length - 1; i >= 0; i--) {
+                            leftListModel.addElement(rightListModel.elementAt(indices[i]));
+                            rightListModel.remove(indices[i]);
                         }
                     }
                 }

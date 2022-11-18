@@ -34,4 +34,14 @@ public class Student implements Comparable<Student>{
     public int getGroupNumber() {
         return groupNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "identifier=" + identifier +
+                ", surname='" + surname + '\'' +
+                ", courseNumber=" + courseNumber +
+                ", groupNumber=" + groupNumber +
+                '}';
+    }
 }

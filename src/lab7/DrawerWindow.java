@@ -50,7 +50,7 @@ public class DrawerWindow extends JFrame {
         initButton("Blue", Color.BLUE);
         initDialogueButton();
         initLoadButton();
-        drawPanel.setColor(getColorFromActionCommand(colorChooser.getSelection().getActionCommand()));
+        //drawPanel.setColor(getColorFromActionCommand(colorChooser.getSelection().getActionCommand()));
     }
 
     private void initButton(String name, Color color) {
@@ -62,7 +62,7 @@ public class DrawerWindow extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                drawPanel.setColor(getColorFromActionCommand(colorChooser.getSelection().getActionCommand()));
+                //drawPanel.setColor(getColorFromActionCommand(colorChooser.getSelection().getActionCommand()));
             }
         });
 
@@ -114,11 +114,11 @@ public class DrawerWindow extends JFrame {
         colorsPanel.add(button);
     }
 
-    private Color getColorFromActionCommand(String actionCommand) {
-        return switch (actionCommand) {
-            case "Green" -> Color.GREEN;
-            case "Blue" -> Color.BLUE;
-            default -> Color.RED;
-        };
-    }
+//    private Color getColorFromActionCommand(String actionCommand) {
+////        return switch (actionCommand) {
+////            case "Green" -> Color.GREEN;
+////            case "Blue" -> Color.BLUE;
+////            default -> Color.RED;
+////        };
+//    }
 }

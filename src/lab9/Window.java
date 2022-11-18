@@ -27,9 +27,10 @@ public class Window extends JFrame {
         super("Students list");
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(400, 300));
+        setMinimumSize(new Dimension(1200, 400));
         initMenu();
         initTables();
+        initButton();
         this.setVisible(true);
     }
 
@@ -73,6 +74,21 @@ public class Window extends JFrame {
         sortedTable = new JTable(sortedTableModel);
         initUnsortedData(unsortedTable, BorderLayout.WEST);
         initUnsortedData(sortedTable, BorderLayout.EAST);
+    }
+
+    private void initButton(){
+        JPanel container = new JPanel(new FlowLayout());
+        JButton button = new JButton("Add element");
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        container.add(button);
+        this.add(container, BorderLayout.CENTER);
     }
 
     private void initUnsortedData(JTable table, String position){

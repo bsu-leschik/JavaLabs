@@ -15,12 +15,7 @@ public class Utils {
         ArrayList<Student> students = new ArrayList<>();
 
         while (reader.hasNext()){
-            Scanner lineScanner = new Scanner(reader.next());
-            lineScanner.useDelimiter(" ");
-            students.add(new Student(lineScanner.nextInt(),
-                    lineScanner.next(),
-                    lineScanner.nextInt(),
-                    lineScanner.nextInt()));
+            students.add(parseStudent(reader.next()));
         }
 
         return students;
@@ -52,5 +47,14 @@ public class Utils {
         }).collect(Collectors.toCollection(ArrayList::new)));
 
         return studentsSorted;
+    }
+
+    public static Student parseStudent(String data) throws InputMismatchException{
+        Scanner lineScanner = new Scanner(data);
+        lineScanner.useDelimiter(" ");
+        return new Student(lineScanner.nextInt(),
+                lineScanner.next(),
+                lineScanner.nextInt(),
+                lineScanner.nextInt());
     }
 }

@@ -1,24 +1,27 @@
 package lab9;
 
-import jdk.jshell.execution.Util;
-
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.TreeSet;
+import java.util.*;
 
 
 public class Window extends JFrame {
 
     private JTable unsortedTable;
     private JTable sortedTable;
+    private JTextField filterInput;
 
-    private String[] tableNames = new String[]{"Identifier", "Surname", "Course", "Group"};
+    private final Border badFilter = new LineBorder(Color.RED, 3);
+
+    private final String[] tableNames = new String[]{"Identifier", "Surname", "Course", "Group"};
 
     private DefaultTableModel unsortedTableModel;
     private DefaultTableModel sortedTableModel;
@@ -30,7 +33,7 @@ public class Window extends JFrame {
         setMinimumSize(new Dimension(1200, 400));
         initMenu();
         initTables();
-        initButton();
+        initControlElements();
         this.setVisible(true);
     }
 
@@ -60,6 +63,9 @@ public class Window extends JFrame {
                     catch (NoSuchElementException e){
                         JOptionPane.showMessageDialog(Window.this, "Data is corrupted!", "NoSuchElementException", JOptionPane.ERROR_MESSAGE);
                     }
+                    catch (NumberFormatException exception){
+                        JOptionPane.showMessageDialog(Window.this, "Enter appropriate filter item", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -72,32 +78,75 @@ public class Window extends JFrame {
         unsortedTable = new JTable(unsortedTableModel);
         sortedTableModel = new DefaultTableModel(tableNames, 0);
         sortedTable = new JTable(sortedTableModel);
-        initUnsortedData(unsortedTable, BorderLayout.WEST);
-        initUnsortedData(sortedTable, BorderLayout.EAST);
+        initDataTable(unsortedTable, BorderLayout.WEST);
+        initDataTable(sortedTable, BorderLayout.EAST);
     }
 
-    private void initButton(){
-        JPanel container = new JPanel(new FlowLayout());
+    private void initControlElements(){
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+
         JButton button = new JButton("Add element");
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    addStudent(Utils.parseStudent(JOptionPane.showInputDialog(Window.this, "Enter element string")));
+                }
+                catch (NumberFormatException exception){
+                    JOptionPane.showMessageDialog(Window.this, "Enter appropriate filter item!", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                }
+                catch (InputMismatchException exception){
+                    JOptionPane.showMessageDialog(Window.this, "Data is invalid!", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        filterInput = new JTextField(5);
+        filterInput.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    try {
+                        addFilteredData();
+                    }
+                    catch (NumberFormatException exception){
+                        JOptionPane.showMessageDialog(Window.this, "Enter filter item", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch (IllegalArgumentException exception){
+                        JOptionPane.showMessageDialog(Window.this, exception.getMessage(), exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
 
             }
         });
 
+        JPanel filterHolder = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        filterHolder.add(new JLabel("Filter item:"));
+        filterHolder.add(filterInput, BorderLayout.EAST);
         container.add(button);
+        container.add(filterHolder);
         this.add(container, BorderLayout.CENTER);
     }
 
-    private void initUnsortedData(JTable table, String position){
+    private void initDataTable(JTable table, String position){
         table.setDefaultEditor(Object.class, null);
         JScrollPane scrollPane = new JScrollPane(table);
         this.add(scrollPane, position);
     }
 
-    private void loadData(ArrayList<Student> students){
+    private void loadData(ArrayList<Student> students) throws NumberFormatException{
         unsortedTableModel = new DefaultTableModel(tableNames, 0);
         for (Student student : students) {
             unsortedTableModel.addRow(new String[]{student.identifier + "", student.surname, student.courseNumber + "", student.groupNumber + ""});
@@ -105,7 +154,8 @@ public class Window extends JFrame {
         unsortedTable.setModel(unsortedTableModel);
 
         sortedTableModel = new DefaultTableModel(tableNames, 0);
-        TreeSet<Student> sortedStudents = Utils.sortData(students, 3);
+
+        TreeSet<Student> sortedStudents = Utils.sortData(students, Integer.parseInt(filterInput.getText()));
 
         for (Student student : sortedStudents) {
             sortedTableModel.addRow(new String[]{student.identifier + "", student.surname, student.courseNumber + "", student.groupNumber + ""});
@@ -114,4 +164,39 @@ public class Window extends JFrame {
         sortedTable.setModel(sortedTableModel);
     }
 
+    private void addFilteredData() throws NullPointerException, NumberFormatException{
+        sortedTableModel = new DefaultTableModel(tableNames, 0);
+
+        TreeSet<Student> sortedStudents = Utils.sortData(getStudentsList(), Integer.parseInt(filterInput.getText()));
+        filterInput.setBorder(null);
+
+        for (Student student : sortedStudents) {
+            sortedTableModel.addRow(new String[]{student.identifier + "", student.surname, student.courseNumber + "", student.groupNumber + ""});
+        }
+
+        sortedTable.setModel(sortedTableModel);
+    }
+
+
+    private ArrayList<Student> getStudentsList() throws NullPointerException{
+        ArrayList<Student> students = new ArrayList<>();
+
+        if (unsortedTableModel.getDataVector().isEmpty()){
+            throw new IllegalArgumentException("Nothing to sort!");
+        }
+
+        for (Vector<String> vector : unsortedTableModel.getDataVector()) {
+            students.add(parseVector(vector));
+        }
+        return students;
+    }
+    private Student parseVector(Vector<String> studentVector){
+        return new Student(Integer.parseInt(studentVector.elementAt(0)),studentVector.elementAt(1),
+                Integer.parseInt(studentVector.elementAt(2)), Integer.parseInt(studentVector.elementAt(3)));
+    }
+
+    private void addStudent(Student student){
+        unsortedTableModel.addRow(new String[]{student.identifier + "", student.surname, student.courseNumber + "", student.groupNumber + ""});
+        addFilteredData();
+    }
 }

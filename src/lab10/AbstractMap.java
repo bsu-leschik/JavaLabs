@@ -13,6 +13,18 @@ public abstract class AbstractMap<K, L> extends ArrayList<Pair<K, L>> {
         return super.iterator();
     }
 
+    @Override
+    @Deprecated
+    public boolean add(Pair<K, L> pair){
+        return super.add(pair);
+    }
+
+    @Override
+    @Deprecated
+    public void add(int element , Pair<K, L> pair){
+        super.add(element, pair);
+    }
+
     public PairMapIterator<K, L> getIterator(){
         return new PairMapIterator<>(this);
     }

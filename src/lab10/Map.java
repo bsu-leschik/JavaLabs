@@ -14,7 +14,7 @@ public class Map<K, L> extends AbstractMap<K, L>{
         }
 
         if (!isThereKey(key)) {
-            super.add(new Pair<K, L>(key, value));
+            data.add(new Pair<K, L>(key, value));
             return true;
         }
 
@@ -22,7 +22,7 @@ public class Map<K, L> extends AbstractMap<K, L>{
     }
 
     public L get(K key){
-        PairMapIterator<K, L> pairMapIterator = new PairMapIterator<>(this);
+        PairMapIterator<K, L> pairMapIterator = getIterator();
         while (pairMapIterator.hasNext()){
             Pair<K, L> current = pairMapIterator.getNext();
             if (current.key.equals(key)){
@@ -36,7 +36,7 @@ public class Map<K, L> extends AbstractMap<K, L>{
         boolean isAllAdded = true;
         for (Pair<K, L> pair : pairs) {
             if (!isThereKey(pair.key)){
-                super.add(pair);
+                data.add(pair);
             }
             else {
                 isAllAdded = false;
@@ -47,7 +47,7 @@ public class Map<K, L> extends AbstractMap<K, L>{
 
     private boolean isThereKey(K key){
         final boolean[] isThere = {false};
-        this.stream().forEach(new Consumer<Pair<K, L>>() {
+        data.stream().forEach(new Consumer<Pair<K, L>>() {
             @Override
             public void accept(Pair<K, L> pair) {
                 if (pair.key.equals(key)){

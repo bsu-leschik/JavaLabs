@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 public class Map<K, L> extends AbstractMap<K, L>{
     public Map(){
-        super();
+        data = new ArrayList<>();
     }
 
     public boolean put(K key, L value){

@@ -38,9 +38,5 @@ public abstract class AbstractMap<K, L> implements Iterable<K, L>{
         Vector<Pair<K, L>> vector = new Vector<>(this.data);
         return new JList<Pair<K, L>>(vector);
     }
-
-    public static void main(String[] args) {
-        Map<Integer, Integer> map = new Map<Integer, Integer>();
-    }
 }
 

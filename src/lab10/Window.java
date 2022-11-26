@@ -35,7 +35,11 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Pair<Integer, String> pair = parseString(JOptionPane.showInputDialog("Enter key and value"));
+                    String line = JOptionPane.showInputDialog("Enter key and value");
+                    if (line == null){
+                        return;
+                    }
+                    Pair<Integer, String> pair = parseString(line);
                     if(!map.put(pair.key, pair.value)){
                         JOptionPane.showMessageDialog(Window.this, "Invalid key!",
                                 "Key Error", JOptionPane.ERROR_MESSAGE);
@@ -56,7 +60,11 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String value = map.get(Integer.parseInt(JOptionPane.showInputDialog("Enter key")));
+                    String line = JOptionPane.showInputDialog("Enter key");
+                    if (line == null){
+                        return;
+                    }
+                    String value = map.get(Integer.parseInt(line));
                     if(value == null){
                         JOptionPane.showMessageDialog(Window.this, "Invalid key!",
                                 "Key Error", JOptionPane.ERROR_MESSAGE);
@@ -79,7 +87,11 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ArrayList<Pair<Integer, String>> list = parseMany(JOptionPane.showInputDialog("Enter key"));
+                    String line = JOptionPane.showInputDialog("Enter keys and values");
+                    if (line == null){
+                        return;
+                    }
+                    ArrayList<Pair<Integer, String>> list = parseMany(line);
                     if(!map.putAll(list)){
                         JOptionPane.showMessageDialog(Window.this, "Invalid key!",
                                 "Key Error", JOptionPane.ERROR_MESSAGE);

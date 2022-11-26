@@ -39,10 +39,7 @@ public class Utils {
         studentsSorted.addAll(students.stream().filter(new Predicate<Student>() {
             @Override
             public boolean test(Student student) {
-                if (student.courseNumber == course) {
-                    return true;
-                }
-                return false;
+                return student.courseNumber == course;
             }
         }).collect(Collectors.toCollection(ArrayList::new)));
 

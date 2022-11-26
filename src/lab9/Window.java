@@ -153,15 +153,7 @@ public class Window extends JFrame {
         }
         unsortedTable.setModel(unsortedTableModel);
 
-        sortedTableModel = new DefaultTableModel(tableNames, 0);
-
-        TreeSet<Student> sortedStudents = Utils.sortData(students, Integer.parseInt(filterInput.getText()));
-
-        for (Student student : sortedStudents) {
-            sortedTableModel.addRow(new String[]{student.identifier + "", student.surname, student.courseNumber + "", student.groupNumber + ""});
-        }
-
-        sortedTable.setModel(sortedTableModel);
+        addFilteredData();
     }
 
     private void addFilteredData() throws NullPointerException, NumberFormatException{

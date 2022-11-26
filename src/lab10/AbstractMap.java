@@ -2,7 +2,6 @@ package lab10;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public abstract class AbstractMap<K, L> implements Iterable<K, L>{
 
@@ -34,9 +33,10 @@ public abstract class AbstractMap<K, L> implements Iterable<K, L>{
         return new PairMapIterator<>(this.data);
     }
 
-    public JList<Pair<K, L>> jList(){
-        Vector<Pair<K, L>> vector = new Vector<>(this.data);
-        return new JList<Pair<K, L>>(vector);
+    public DefaultListModel<Pair<K, L>> listModel(){
+        DefaultListModel<Pair<K, L>> model = new DefaultListModel<>();
+        model.addAll(data);
+        return model;
     }
 }
 

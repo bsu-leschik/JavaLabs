@@ -12,7 +12,7 @@ public class PairMapIterator<K, L> implements MapIterator<K, L>{
     }
     @Override
     public boolean hasNext() {
-        return currentIndex >= data.size();
+        return currentIndex <= data.size();
     }
 
     @Override

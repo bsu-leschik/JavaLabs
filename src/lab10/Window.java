@@ -110,11 +110,6 @@ public class Window extends JFrame {
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
-    private void initButton(JButton button){
-
-        buttonsPanel.add(button);
-    }
-
     private Pair<Integer, String> parseString(String input) throws NumberFormatException, NoSuchElementException {
         StringTokenizer tokenizer = new StringTokenizer(input, " ");
         return new Pair<>(Integer.parseInt(tokenizer.nextToken()), tokenizer.nextToken());

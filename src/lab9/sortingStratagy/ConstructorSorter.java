@@ -17,11 +17,11 @@ public class ConstructorSorter implements Sorter{
 
             TreeSet<Student> studentsSorted = new TreeSet<>(new Comparator<Student>() {
                 @Override
-                public int compare(Student student, Student t1) {
-                    if (student.getSurname().compareToIgnoreCase(t1.getSurname()) == 0){
-                        return student.getGroupNumber() - t1.getGroupNumber();
+                public int compare(Student student, Student student1) {
+                    if (student.getSurname().compareToIgnoreCase(student1.getSurname()) == 0){
+                        return student.getGroupNumber() - student1.getGroupNumber();
                     }
-                    return student.getSurname().compareToIgnoreCase(t1.getSurname());
+                    return student.getSurname().compareToIgnoreCase(student1.getSurname());
                 }
             });
 

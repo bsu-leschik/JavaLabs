@@ -16,7 +16,11 @@ public class Student implements Comparable<Student>{
 
     @Override
     public int compareTo(Student o) {
-        return 0;
+        if (identifier == o.identifier && surname.equals(o.surname) && courseNumber == o.courseNumber &&
+                groupNumber == o.groupNumber){
+            return 0;
+        }
+        return 1;
     }
 
     public int getIdentifier() {

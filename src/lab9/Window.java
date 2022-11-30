@@ -1,5 +1,9 @@
 package lab9;
 
+import lab9.sortingStratagy.ConstructorSorter;
+import lab9.sortingStratagy.Sorter;
+import lab9.sortingStratagy.StreamSorter;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -26,6 +30,8 @@ public class Window extends JFrame {
     private DefaultTableModel unsortedTableModel;
     private DefaultTableModel sortedTableModel;
 
+    private Sorter tableSorter;
+
     Window(){
         super("Students list");
 
@@ -34,6 +40,7 @@ public class Window extends JFrame {
         initMenu();
         initTables();
         initControlElements();
+        tableSorter = new StreamSorter();
         this.setVisible(true);
     }
 
@@ -101,6 +108,7 @@ public class Window extends JFrame {
                 catch (InputMismatchException exception){
                     JOptionPane.showMessageDialog(Window.this, "Data is invalid!", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
                 }
+                catch (NullPointerException ignored){};
             }
         });
 
@@ -159,7 +167,7 @@ public class Window extends JFrame {
     private void addFilteredData() throws NullPointerException, NumberFormatException{
         sortedTableModel = new DefaultTableModel(tableNames, 0);
 
-        TreeSet<Student> sortedStudents = Utils.sortData(getStudentsList(), Integer.parseInt(filterInput.getText()));
+        TreeSet<Student> sortedStudents = tableSorter.sortData(getStudentsList(), Integer.parseInt(filterInput.getText()));
         filterInput.setBorder(null);
 
         for (Student student : sortedStudents) {

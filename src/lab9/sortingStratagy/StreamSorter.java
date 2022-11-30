@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class StreamSorter implements Sorter{
     @Override
@@ -14,9 +15,15 @@ public class StreamSorter implements Sorter{
             throw new IllegalArgumentException("Students is empty");
         }
 
-        TreeSet<Student> studentsSorted = new TreeSet<>();
+        TreeSet<Student> studentsSorted = new TreeSet<>(students);
 
-        studentsSorted.addAll(students.stream().sorted(new Comparator<Student>() {
+        studentsSorted = studentsSorted.stream().filter(new Predicate<Student>() {
+            @Override
+            public boolean test(Student student) {
+                return student.getCourseNumber() == course;
+            }
+        }).collect(Collectors.toCollection(TreeSet::new));
+        studentsSorted = studentsSorted.stream().sorted(new Comparator<Student>() {
             @Override
             public int compare(Student student, Student student1) {
                 if (student.getSurname().compareToIgnoreCase(student1.getSurname()) == 0){
@@ -24,13 +31,7 @@ public class StreamSorter implements Sorter{
                 }
                 return student.getSurname().compareToIgnoreCase(student1.getSurname());
             }
-        }).toList());
-        studentsSorted.stream().filter(new Predicate<Student>() {
-            @Override
-            public boolean test(Student student) {
-                return student.getCourseNumber() == course;
-            }
-        });
+        }).collect(Collectors.toCollection(TreeSet::new));
 
         return studentsSorted;
     }

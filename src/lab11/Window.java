@@ -34,7 +34,7 @@ public class Window extends JFrame implements Subject{
             @Override
             public void keyTyped(KeyEvent e) {
                 if (!e.isActionKey() && e.getKeyChar() != KeyEvent.VK_BACK_SPACE && e.getKeyChar() != KeyEvent.VK_ENTER
-                && e.getKeyChar() != KeyEvent.VK_TAB && e.getKeyChar() != KeyEvent.VK_DELETE){
+                && e.getKeyChar() != KeyEvent.VK_TAB && e.getKeyChar() != KeyEvent.VK_DELETE && e.getKeyChar() != KeyEvent.VK_ESCAPE){
                     notifyObservers(e.getKeyChar());
                 }
             }

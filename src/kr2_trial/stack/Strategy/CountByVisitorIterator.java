@@ -4,12 +4,12 @@ import kr2_trial.stack.Visitor.Stack.Stack;
 import kr2_trial.stack.Visitor.StackVisitor;
 import kr2_trial.stack.Visitor.Visitor;
 
-public class CountByStrategyIterator implements Strategy {
+public class CountByVisitorIterator implements Strategy {
 
     Stack stack;
 
 
-    public CountByStrategyIterator(Stack stack){
+    public CountByVisitorIterator(Stack stack){
         this.stack = stack;
     }
 

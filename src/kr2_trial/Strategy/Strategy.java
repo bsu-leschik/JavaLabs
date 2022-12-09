@@ -1,4 +1,4 @@
-package kr2_trial.stack.Strategy;
+package kr2_trial.Strategy;
 
 public interface Strategy {
     int execute();

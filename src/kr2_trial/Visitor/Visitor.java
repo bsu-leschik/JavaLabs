@@ -1,6 +1,6 @@
-package kr2_trial.stack.Visitor;
+package kr2_trial.Visitor;
 
-import kr2_trial.stack.Visitor.Stack.Stack;
+import kr2_trial.stack.Stack;
 
 public interface Visitor {
 

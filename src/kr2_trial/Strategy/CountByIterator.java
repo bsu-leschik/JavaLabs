@@ -1,7 +1,7 @@
-package kr2_trial.stack.Strategy;
+package kr2_trial.Strategy;
 
-import kr2_trial.stack.Visitor.Stack.Iterator;
-import kr2_trial.stack.Visitor.Stack.Stack;
+import kr2_trial.Itertor.Iterator;
+import kr2_trial.stack.Stack;
 
 public class CountByIterator implements Strategy {
 

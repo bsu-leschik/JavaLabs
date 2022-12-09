@@ -209,10 +209,10 @@ public class Window extends JFrame {
 
     private void saveDataTo(double data, String name) throws InvalidNameException {
         switch (name) {
-            //case "Number of elements:" -> this.amountOfElements = data;
-            //case "First number:" -> this.firstElement = data;
-            //case "Delta:" -> this.delta = data;
-            //default -> throw new InvalidNameException("Internal: no such field");
+            case "Number of elements:" -> this.amountOfElements = data;
+            case "First number:" -> this.firstElement = data;
+            case "Delta:" -> this.delta = data;
+            default -> throw new InvalidNameException("Internal: no such field");
         }
     }
 

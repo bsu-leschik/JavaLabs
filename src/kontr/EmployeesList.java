@@ -5,27 +5,27 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 
 public class EmployeesList {
-//    public static ArrayList<Employee> getEmployeesBySalary(ArrayList<Employee> list) throws IllegalArgumentException{
-//        checkArguments(list);
-//        return new ArrayList<>(list.stream().sorted(new Comparator<Employee>() {
-//            @Override
-//            public int compare(Employee o1, Employee o2) {
-//                return o1.getSalary() - o2.getSalary();
-//            }
-//        }).toList());
-//
-//    }
-//
-//    public static ArrayList<Employee> getEmployeesBySalaryAndCoefficient(ArrayList<Employee> list) throws IllegalArgumentException{
-//        checkArguments(list);
-//        return new ArrayList<>(list.stream().sorted(new Comparator<Employee>() {
-//            @Override
-//            public int compare(Employee o1, Employee o2) {
-//                return (int) (o1.getSalary() / o1.getCoefficient() - o2.getSalary() / o2.getCoefficient());
-//            }
-//        }).toList());
-//
-//    }
+    public static ArrayList<Employee> getEmployeesBySalary(ArrayList<Employee> list) throws IllegalArgumentException{
+        checkArguments(list);
+        return new ArrayList<>(list.stream().sorted(new Comparator<Employee>() {
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                return o1.getSalary() - o2.getSalary();
+            }
+        }).toList());
+
+    }
+
+    public static ArrayList<Employee> getEmployeesBySalaryAndCoefficient(ArrayList<Employee> list) throws IllegalArgumentException{
+        checkArguments(list);
+        return new ArrayList<>(list.stream().sorted(new Comparator<Employee>() {
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                return (int) (o1.getSalary() / o1.getCoefficient() - o2.getSalary() / o2.getCoefficient());
+            }
+        }).toList());
+
+    }
 
     public static ArrayList<String> getCompaniesStartingWithB(ArrayList<Employee> list) throws IllegalArgumentException{
         checkArguments(list);

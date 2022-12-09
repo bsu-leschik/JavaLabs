@@ -4,12 +4,10 @@ import javax.swing.*;
 
 public class JObserverLabel extends JLabel implements Observer{
 
-    public JObserverLabel(){
-        super();
-    }
+    public JObserverLabel(){super();}
 
     @Override
-    public void update(Character character) {
+    public void update(String character) {
         setText(character.toString());
     }
 }

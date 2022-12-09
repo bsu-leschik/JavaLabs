@@ -27,16 +27,14 @@ public class Window extends JFrame implements Subject{
 
         currentKey = new JObserverLabel();
         currentKey.setFocusable(false);
+        currentKey.setFont(new Font(null , Font.PLAIN, 20));
         attach(currentKey);
         add(currentKey, BorderLayout.EAST);
 
         addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                if (!e.isActionKey() && e.getKeyChar() != KeyEvent.VK_BACK_SPACE && e.getKeyChar() != KeyEvent.VK_ENTER
-                && e.getKeyChar() != KeyEvent.VK_TAB && e.getKeyChar() != KeyEvent.VK_DELETE && e.getKeyChar() != KeyEvent.VK_ESCAPE){
-                    notifyObservers(e.getKeyChar());
-                }
+            public void keyPressed(KeyEvent e) {
+                notifyObservers(KeyEvent.getKeyText(e.getKeyCode()));
             }
         });
 
@@ -56,7 +54,7 @@ public class Window extends JFrame implements Subject{
     }
 
     @Override
-    public void notifyObservers(Character character) {
+    public void notifyObservers(String character) {
         for (Observer observer : observers) {
             observer.update(character);
         }

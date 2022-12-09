@@ -2,9 +2,9 @@ package lab11;
 
 import javax.swing.*;
 
-public class JObserverList extends JList<Character> implements Observer{
+public class JObserverList extends JList<String> implements Observer{
 
-    DefaultListModel<Character> model;
+    DefaultListModel<String> model;
 
     public JObserverList(){
         super();
@@ -13,7 +13,7 @@ public class JObserverList extends JList<Character> implements Observer{
     }
 
     @Override
-    public void update(Character character) {
+    public void update(String character) {
         model.addElement(character);
     }
 }

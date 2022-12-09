@@ -1,4 +1,4 @@
-package kr2_trial.stack;
+package kr2_trial.stack.Visitor.Stack;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class StackIterator implements Iterator{
 
     @Override
     public int getNext() {
-        return data.get(++currentElementIndex);
+        return data.get(currentElementIndex++);
     }
 
     @Override

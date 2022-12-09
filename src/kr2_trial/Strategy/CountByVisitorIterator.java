@@ -15,7 +15,7 @@ public class CountByVisitorIterator implements Strategy {
 
     @Override
     public int execute() {
-        Visitor visitor = new StackVisitor();
+        StackVisitor visitor = new StackVisitor();
         visitor.visitStack(stack);
         return visitor.getSize();
     }

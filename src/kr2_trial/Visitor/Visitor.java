@@ -7,8 +7,4 @@ public interface Visitor {
     int size = 0;
 
     void visitStack(Stack stack);
-
-    default int getSize() {
-        return size;
-    }
 }

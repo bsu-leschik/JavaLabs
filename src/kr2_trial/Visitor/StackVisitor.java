@@ -17,4 +17,8 @@ public class StackVisitor implements Visitor {
         }
         this.size = i;
     }
+
+    public int getSize() {
+        return size;
+    }
 }

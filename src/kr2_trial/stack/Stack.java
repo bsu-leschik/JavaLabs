@@ -32,4 +32,8 @@ public class Stack implements Iterable, Element {
         return data.remove(data.size() - 1);
     }
 
+    @Override
+    public String toString() {
+        return "Items from stack:" + data.toString();
+    }
 }

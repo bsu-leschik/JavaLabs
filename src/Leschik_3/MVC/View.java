@@ -1,8 +1,8 @@
-package kr2_trial.MVC;
+package Leschik_3.MVC;
 
-import kr2_trial.Strategy.CountByIterator;
-import kr2_trial.Strategy.CountByVisitorIterator;
-import kr2_trial.set.Set;
+import Leschik_3.Strategy.CountByIterator;
+import Leschik_3.Strategy.CountByVisitorIterator;
+import Leschik_3.set.Set;
 
 import javax.swing.*;
 import java.awt.*;

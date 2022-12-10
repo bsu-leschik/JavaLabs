@@ -1,7 +1,7 @@
-package kr2_trial.Strategy;
+package Leschik_3.Strategy;
 
-import kr2_trial.set.Set;
-import kr2_trial.Visitor.SetVisitor;
+import Leschik_3.set.Set;
+import Leschik_3.Visitor.SetVisitor;
 
 public class CountByVisitorIterator implements Strategy {
 

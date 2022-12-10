@@ -1,4 +1,4 @@
-package kr2_trial.Strategy;
+package Leschik_3.Strategy;
 
 public interface Strategy {
     int execute();

@@ -1,4 +1,4 @@
-package kr2_trial.Itertor;
+package Leschik_3.Itertor;
 
 
 public interface Iterator {

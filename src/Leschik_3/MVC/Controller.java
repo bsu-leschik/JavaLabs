@@ -1,7 +1,7 @@
-package kr2_trial.MVC;
+package Leschik_3.MVC;
 
-import kr2_trial.Strategy.Strategy;
-import kr2_trial.set.Set;
+import Leschik_3.Strategy.Strategy;
+import Leschik_3.set.Set;
 
 import java.io.File;
 import java.io.IOException;

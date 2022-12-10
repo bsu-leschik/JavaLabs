@@ -1,11 +1,11 @@
-package kr2_trial.set;
+package Leschik_3.set;
 
-import kr2_trial.Itertor.Iterable;
-import kr2_trial.Itertor.Iterator;
-import kr2_trial.Visitor.Element;
-import kr2_trial.Visitor.Visitor;
-import kr2_trial.Strategy.CountByVisitorIterator;
-import kr2_trial.Strategy.Strategy;
+import Leschik_3.Itertor.Iterable;
+import Leschik_3.Itertor.Iterator;
+import Leschik_3.Visitor.Element;
+import Leschik_3.Visitor.Visitor;
+import Leschik_3.Strategy.CountByVisitorIterator;
+import Leschik_3.Strategy.Strategy;
 
 
 import java.io.File;

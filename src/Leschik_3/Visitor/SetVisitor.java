@@ -1,7 +1,7 @@
-package kr2_trial.Visitor;
+package Leschik_3.Visitor;
 
-import kr2_trial.Itertor.Iterator;
-import kr2_trial.set.Set;
+import Leschik_3.Itertor.Iterator;
+import Leschik_3.set.Set;
 
 public class SetVisitor implements Visitor {
 

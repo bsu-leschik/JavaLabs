@@ -1,6 +1,6 @@
-package kr2_trial.set;
+package Leschik_3.set;
 
-import kr2_trial.Itertor.Iterator;
+import Leschik_3.Itertor.Iterator;
 
 public class SetIterator implements Iterator {
 

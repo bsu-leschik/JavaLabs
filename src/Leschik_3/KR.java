@@ -1,7 +1,7 @@
-package kr2_trial;
+package Leschik_3;
 
-import kr2_trial.MVC.View;
-import kr2_trial.set.Set;
+import Leschik_3.MVC.View;
+import Leschik_3.set.Set;
 
 public class KR {
 

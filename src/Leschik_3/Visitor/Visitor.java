@@ -1,6 +1,6 @@
-package kr2_trial.Visitor;
+package Leschik_3.Visitor;
 
-import kr2_trial.set.Set;
+import Leschik_3.set.Set;
 
 public interface Visitor {
 

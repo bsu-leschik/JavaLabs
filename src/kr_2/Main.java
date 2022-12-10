@@ -1,7 +1,7 @@
-package kr2_trial;
+package kr_2;
 
-import kr2_trial.MVC.View;
-import kr2_trial.stack.Stack;
+import kr_2.MVC.View;
+import kr_2.stack.Stack;
 
 public class Main {
 

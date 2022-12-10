@@ -1,6 +1,6 @@
-package kr2_trial.stack;
+package kr_2.stack;
 
-import kr2_trial.Itertor.Iterator;
+import kr_2.Itertor.Iterator;
 
 public class StackIterator implements Iterator {
 

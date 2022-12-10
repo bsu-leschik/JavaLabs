@@ -1,9 +1,9 @@
-package kr2_trial.stack;
+package kr_2.stack;
 
-import kr2_trial.Itertor.Iterable;
-import kr2_trial.Itertor.Iterator;
-import kr2_trial.Visitor.Element;
-import kr2_trial.Visitor.Visitor;
+import kr_2.Itertor.Iterable;
+import kr_2.Itertor.Iterator;
+import kr_2.Visitor.Element;
+import kr_2.Visitor.Visitor;
 
 import java.util.ArrayList;
 

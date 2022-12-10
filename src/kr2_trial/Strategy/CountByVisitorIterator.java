@@ -1,22 +1,21 @@
 package kr2_trial.Strategy;
 
-import kr2_trial.stack.Stack;
-import kr2_trial.Visitor.StackVisitor;
-import kr2_trial.Visitor.Visitor;
+import kr2_trial.set.Set;
+import kr2_trial.Visitor.SetVisitor;
 
 public class CountByVisitorIterator implements Strategy {
 
-    Stack stack;
+    Set set;
 
 
-    public CountByVisitorIterator(Stack stack){
-        this.stack = stack;
+    public CountByVisitorIterator(Set set){
+        this.set = set;
     }
 
     @Override
     public int execute() {
-        StackVisitor visitor = new StackVisitor();
-        visitor.visitStack(stack);
+        SetVisitor visitor = new SetVisitor();
+        visitor.visitStack(set);
         return visitor.getSize();
     }
 }

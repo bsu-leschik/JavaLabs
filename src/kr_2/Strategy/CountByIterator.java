@@ -1,20 +1,20 @@
-package kr2_trial.Strategy;
+package kr_2.Strategy;
 
-import kr2_trial.Itertor.Iterator;
-import kr2_trial.set.Set;
+import kr_2.Itertor.Iterator;
+import kr_2.stack.Stack;
 
 public class CountByIterator implements Strategy {
 
-    Set set;
+    Stack stack;
 
 
-    public CountByIterator(Set set){
-        this.set = set;
+    public CountByIterator(Stack stack){
+        this.stack = stack;
     }
 
     @Override
     public int execute() {
-        Iterator iterator = set.createIterator();
+        Iterator iterator = stack.createIterator();
         int i = 0;
         while (iterator.hasNext()){
             i++;

@@ -1,41 +1,44 @@
 package kr2_trial.MVC;
 
-import kr2_trial.stack.Stack;
+import kr2_trial.Strategy.Strategy;
+import kr2_trial.set.Set;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.StringTokenizer;
 
 public class Controller {
 
-    Stack stackModel;
+    Set setModel;
 
     String sizeModel;
 
     View view;
-    public Controller(Stack stackModel, View view) {
-            this.stackModel = stackModel;
+    public Controller(Set setModel, View view) {
+            this.setModel = setModel;
             this.view = view;
-    }
-
-    public void setSizeModel(String sizeModel) {
-        this.sizeModel = sizeModel;
-        view.count.setText(sizeModel);
-        view.repaint();
     }
 
     public void addElements(String line) throws NumberFormatException{
         StringTokenizer tokenizer = new StringTokenizer(line," ");
         while (tokenizer.hasMoreTokens()){
-            stackModel.push(Integer.parseInt(tokenizer.nextToken()));
+            setModel.add(Integer.parseInt(tokenizer.nextToken()));
         }
-        view.stack.setText(stackModel.toString());
+        view.set.setText(setModel.toString());
+        view.binarySet.setText(setModel.binaryToString());
         view.repaint();
     }
 
-    public void removeElements(int amount) {
-        for (int i = 0; i < amount; i++) {
-            stackModel.pop();
+    public void saveToFile(File file) throws IOException {
+        if (file == null){
+            return;
         }
-        view.stack.setText(stackModel.toString());
+        setModel.save(file);
         view.repaint();
+    }
+
+    public void setSizeCalculatorAndCalculate(Strategy calculator) {
+        setModel.setCounter(calculator);
+        view.count.setText(String.valueOf(setModel.cardinality()));
     }
 }

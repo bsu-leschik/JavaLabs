@@ -1,5 +1,8 @@
 package lab10;
 
+import lab10.iterator.PairMapIterator;
+import lab10.visitor.Visitor;
+
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -56,5 +59,10 @@ public class Map<K, L> extends AbstractMap<K, L>{
             }
         });
         return isThere[0];
+    }
+
+    @Override
+    public void accept(Visitor<K, L> v) {
+        v.visitMap(this);
     }
 }

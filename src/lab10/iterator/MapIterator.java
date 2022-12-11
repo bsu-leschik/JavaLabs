@@ -1,4 +1,6 @@
-package lab10;
+package lab10.iterator;
+
+import lab10.Pair;
 
 public interface MapIterator<K, L> {
     boolean hasNext();

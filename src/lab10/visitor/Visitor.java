@@ -1,6 +1,10 @@
 package lab10.visitor;
 
-public interface Visitor {
+import lab10.Map;
 
-    void visit(MyString element);
+public interface Visitor<K, L> {
+
+    int size = 0;
+
+    void visitMap(Map<K, L> set);
 }

@@ -1,4 +1,6 @@
-package lab10;
+package lab10.iterator;
+
+import lab10.Pair;
 
 import java.util.ArrayList;
 
@@ -7,7 +9,7 @@ public class PairMapIterator<K, L> implements MapIterator<K, L>{
     int currentIndex = 0;
     ArrayList<Pair<K, L>> data;
 
-    PairMapIterator(ArrayList<Pair<K, L>> list){
+    public PairMapIterator(ArrayList<Pair<K, L>> list){
         data = list;
     }
     @Override

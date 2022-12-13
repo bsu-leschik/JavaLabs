@@ -7,7 +7,14 @@ public class Student implements Comparable<Student>{
     int courseNumber;
     int groupNumber;
 
+    public Student(){}
+
+
     public Student(int identifier, String surname, int courseNumber, int groupNumber){
+        if (surname == null){
+            throw new NullPointerException("Parameters cannot be null");
+        }
+
         this.identifier = identifier;
         this.surname = surname;
         this.courseNumber = courseNumber;
@@ -37,6 +44,22 @@ public class Student implements Comparable<Student>{
 
     public int getGroupNumber() {
         return groupNumber;
+    }
+
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setCourseNumber(int courseNumber) {
+        this.courseNumber = courseNumber;
+    }
+
+    public void setGroupNumber(int groupNumber) {
+        this.groupNumber = groupNumber;
     }
 
     @Override

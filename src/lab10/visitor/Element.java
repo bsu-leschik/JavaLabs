@@ -1,8 +1,5 @@
 package lab10.visitor;
 
-public interface Element {
-
-    default void accept(Visitor visitor){
-        visitor.visit((MyString) this);
-    }
+public interface Element<K, L> {
+    void accept(Visitor<K, L> v);
 }

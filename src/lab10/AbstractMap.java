@@ -1,16 +1,16 @@
 package lab10;
 
+import lab10.iterator.Iterable;
+import lab10.iterator.PairMapIterator;
+import lab10.visitor.Element;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
-public abstract class AbstractMap<K, L> implements Iterable<K, L>{
+public abstract class AbstractMap<K, L> implements Iterable<K, L>, Element<K, L> {
 
     ArrayList<Pair<K, L>> data;
 
-
-    public int size(){
-        return data.size();
-    }
     public boolean isEmpty(){
         return data.isEmpty();
     }
@@ -30,13 +30,13 @@ public abstract class AbstractMap<K, L> implements Iterable<K, L>{
 
     @Override
     public PairMapIterator<K, L> getIterator(){
-        return new PairMapIterator<>(this.data);
+        return new PairMapIterator<K, L>(this.data);
     }
 
-    public DefaultListModel<Pair<K, L>> listModel(){
+    public JList<Pair<K, L>> jList(){
         DefaultListModel<Pair<K, L>> model = new DefaultListModel<>();
         model.addAll(data);
-        return model;
+        return new JList<>(model);
     }
 }
 

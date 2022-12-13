@@ -1,5 +1,7 @@
 package lab10;
 
+import lab10.visitor.MapVisitor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,19 +12,20 @@ import java.util.StringTokenizer;
 
 public class Window extends JFrame {
 
-    Map<Integer, String> map;
-    DefaultListModel<Pair<Integer, String>> listModel;
     JPanel buttonsPanel;
+
+    Controller controller;
+
+    JList<Pair<Integer, String>> mapList;
 
     public Window(Map<Integer, String> map){
         super("Map");
 
-        this.map = map;
-        listModel = map.listModel();
-
+        controller = new Controller(map, this);
 
         setMinimumSize(new Dimension(300, 400));
-        add(new JList<>(listModel), BorderLayout.CENTER);
+
+        add(mapList, BorderLayout.CENTER);
         initButtons();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -40,12 +43,11 @@ public class Window extends JFrame {
                         return;
                     }
                     Pair<Integer, String> pair = parseString(line);
-                    if(!map.put(pair.key, pair.value)){
+                    if(!controller.put(pair.key, pair.value)){
                         JOptionPane.showMessageDialog(Window.this, "Invalid key!",
                                 "Key Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    listModel.addElement(pair);
                 }
                 catch (NumberFormatException | NoSuchElementException | NullPointerException exception){
                     JOptionPane.showMessageDialog(Window.this, "Invalid input!",
@@ -64,7 +66,7 @@ public class Window extends JFrame {
                     if (line == null){
                         return;
                     }
-                    String value = map.get(Integer.parseInt(line));
+                    String value = controller.get(Integer.parseInt(line));
                     if(value == null){
                         JOptionPane.showMessageDialog(Window.this, "Invalid key!",
                                 "Key Error", JOptionPane.ERROR_MESSAGE);
@@ -92,12 +94,9 @@ public class Window extends JFrame {
                         return;
                     }
                     ArrayList<Pair<Integer, String>> list = parseMany(line);
-                    if(!map.putAll(list)){
+                    if(!controller.putAll(list)){
                         JOptionPane.showMessageDialog(Window.this, "Invalid key!",
                                 "Key Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else {
-                        listModel.addAll(list);
                     }
                 }
                 catch (NumberFormatException | NoSuchElementException | NullPointerException exception){
@@ -107,6 +106,19 @@ public class Window extends JFrame {
             }
         });
         buttonsPanel.add(putAllButton);
+
+        JButton sizeButton = new JButton("Size");
+
+        sizeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MapVisitor<Integer, String > visitor = new MapVisitor<Integer, String>();
+                controller.map.accept(visitor);
+                JOptionPane.showMessageDialog(Window.this, visitor.getSize(), "Size", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        buttonsPanel.add(sizeButton);
+
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 

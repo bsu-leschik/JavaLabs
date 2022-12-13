@@ -1,5 +1,8 @@
 package lab9;
 
+import lab9.lab11_2.DOMReader;
+import lab9.lab11_2.SAXReader;
+import lab9.lab11_2.XMLReaderStrategy;
 import lab9.sortingStratagy.ConstructorSorter;
 import lab9.sortingStratagy.Sorter;
 import lab9.sortingStratagy.StreamSorter;
@@ -27,6 +30,8 @@ public class Window extends JFrame {
 
     private final String[] tableNames = new String[]{"Identifier", "Surname", "Course", "Group"};
 
+    XMLReaderStrategy xmlParser;
+
     private DefaultTableModel unsortedTableModel;
     private DefaultTableModel sortedTableModel;
 
@@ -40,7 +45,10 @@ public class Window extends JFrame {
         initMenu();
         initTables();
         initControlElements();
+
         tableSorter = new ConstructorSorter();
+        xmlParser = new SAXReader();
+
         this.setVisible(true);
     }
 
@@ -150,11 +158,17 @@ public class Window extends JFrame {
         sorters.add(new ConstructorSorter());
         sorters.add(new StreamSorter());
 
-        container.add(initStrategySwitches(new String[]{"constructor sorter", "stream sorter"}, sorters));
+        ArrayList<XMLReaderStrategy> readers = new ArrayList<>();
+        readers.add(new SAXReader());
+        readers.add(new DOMReader());
+
+        container.add(initSortingStrategySwitches(new String[]{"constructor sorter", "stream sorter"}, sorters));
+        container.add(initXMLStrategySwitches(new String[]{"SAX", "DOM"}, readers));
+
         this.add(container, BorderLayout.CENTER);
     }
 
-    private JPanel initStrategySwitches(String[] names, ArrayList<Sorter> sorters){
+    private JPanel initSortingStrategySwitches(String[] names, ArrayList<Sorter> sorters){
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ButtonGroup sortStrategyChooser = new ButtonGroup();
 
@@ -168,8 +182,33 @@ public class Window extends JFrame {
                 }
             });
 
+            sorterBtn.setSelected(true);
+
             sortStrategyChooser.add(sorterBtn);
             panel.add(sorterBtn);
+        }
+
+        return panel;
+    }
+
+    private JPanel initXMLStrategySwitches(String[] names, ArrayList<XMLReaderStrategy> xmlReaders){
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        ButtonGroup sortStrategyChooser = new ButtonGroup();
+
+        for (int i = 0; i < names.length; i++) {
+            JRadioButton xmlReaderBtn = new JRadioButton(names[i]);
+            int finalI = i;
+            xmlReaderBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    xmlParser = xmlReaders.get(finalI);
+                }
+            });
+
+            xmlReaderBtn.setSelected(true);
+
+            sortStrategyChooser.add(xmlReaderBtn);
+            panel.add(xmlReaderBtn);
         }
 
         return panel;

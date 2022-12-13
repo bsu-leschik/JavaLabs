@@ -40,7 +40,7 @@ public class Window extends JFrame {
         initMenu();
         initTables();
         initControlElements();
-        tableSorter = new StreamSorter();
+        tableSorter = new ConstructorSorter();
         this.setVisible(true);
     }
 
@@ -145,7 +145,34 @@ public class Window extends JFrame {
         filterHolder.add(filterInput, BorderLayout.EAST);
         container.add(button);
         container.add(filterHolder);
+
+        ArrayList<Sorter> sorters = new ArrayList<>();
+        sorters.add(new ConstructorSorter());
+        sorters.add(new StreamSorter());
+
+        container.add(initStrategySwitches(new String[]{"constructor sorter", "stream sorter"}, sorters));
         this.add(container, BorderLayout.CENTER);
+    }
+
+    private JPanel initStrategySwitches(String[] names, ArrayList<Sorter> sorters){
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        ButtonGroup sortStrategyChooser = new ButtonGroup();
+
+        for (int i = 0; i < names.length; i++) {
+            JRadioButton sorterBtn = new JRadioButton(names[i]);
+            int finalI = i;
+            sorterBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    tableSorter = sorters.get(finalI);
+                }
+            });
+
+            sortStrategyChooser.add(sorterBtn);
+            panel.add(sorterBtn);
+        }
+
+        return panel;
     }
 
     private void initDataTable(JTable table, String position){

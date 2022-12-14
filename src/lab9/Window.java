@@ -6,17 +6,20 @@ import lab9.lab11_2.XMLReaderStrategy;
 import lab9.sortingStratagy.ConstructorSorter;
 import lab9.sortingStratagy.Sorter;
 import lab9.sortingStratagy.StreamSorter;
+import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -68,18 +71,23 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setAcceptAllFileFilterUsed(false);
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("xml documents", "xml"));
                 if (fileChooser.showOpenDialog(Window.this) == JFileChooser.APPROVE_OPTION){
                     try {
-                        loadData(Utils.readFromFile(fileChooser.getSelectedFile()));
-                    } catch (FileNotFoundException ex) {
-                        JOptionPane.showMessageDialog(Window.this, "Invalid path to the file!", "IOException", JOptionPane.ERROR_MESSAGE);
+                        loadData(xmlParser.parse(fileChooser.getSelectedFile()));
                     }
-                    catch (NoSuchElementException e){
-                        JOptionPane.showMessageDialog(Window.this, "Data is corrupted!", "NoSuchElementException", JOptionPane.ERROR_MESSAGE);
+                    catch (IOException exception) {
+                        JOptionPane.showMessageDialog(Window.this, "Inappropriate path", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
                     }
-                    catch (NumberFormatException exception){
+                    catch (ParserConfigurationException exception) {
+                        JOptionPane.showMessageDialog(Window.this, "Internal error has happened", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch (SAXException exception) {
                         JOptionPane.showMessageDialog(Window.this, "Enter appropriate filter item", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch (NumberFormatException ignored) {
                     }
                 }
             }
@@ -111,6 +119,9 @@ public class Window extends JFrame {
                     addStudent(Utils.parseStudent(JOptionPane.showInputDialog(Window.this, "Enter element string")));
                 }
                 catch (NumberFormatException exception){
+                    if (filterInput.getText().isEmpty()){
+                        return;
+                    }
                     JOptionPane.showMessageDialog(Window.this, "Enter appropriate filter item!", exception.getClass().getName(), JOptionPane.ERROR_MESSAGE);
                 }
                 catch (InputMismatchException exception){

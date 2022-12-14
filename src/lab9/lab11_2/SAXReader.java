@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class SAXReader implements XMLReaderStrategy {
 
     @Override
-    public ArrayList<Student> parse(File file) throws IllegalArgumentException, IOException, ParserConfigurationException, SAXException {
+    public ArrayList<Student> parse(File file) throws IllegalArgumentException, IOException, ParserConfigurationException, SAXException, NullPointerException {
         SAXParserFactory parserFactor = SAXParserFactory.newInstance();
         SAXParser parser = parserFactor.newSAXParser();
         SAXReaderHandler handler= new SAXReaderHandler();
@@ -35,17 +35,19 @@ class SAXReaderHandler extends DefaultHandler {
 
     @Override
     public void startElement(String namespaceURL, String localName, String qName, Attributes attributes) throws SAXException, NullPointerException{
-        if (!localName.equals("student")){
+        if (!qName.equals("student")){
             return;
         }
-        Student student = new Student();
 
         if (attributes.getLength() < 4){
             throw new SAXException("Inappropriate attributes for student tag");
         }
 
-        students.add(new Student(Integer.getInteger(attributes.getValue("identifier")), attributes.getValue("surname"),
-                Integer.getInteger(attributes.getValue("courseNumber")), Integer.getInteger(attributes.getValue("groupNumber"))));
+        students.add(new Student(Integer.parseInt(attributes.getValue("identifier")),
+                attributes.getValue("surname"),
+                Integer.parseInt(attributes.getValue("courseNumber")),
+                Integer.parseInt(attributes.getValue("groupNumber"))
+        ));
     }
 
     @Override

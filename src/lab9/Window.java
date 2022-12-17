@@ -1,6 +1,7 @@
 package lab9;
 
 import lab9.lab11_2.DOMReader;
+import lab9.lab11_2.DOMWriter;
 import lab9.lab11_2.SAXReader;
 import lab9.lab11_2.XMLReaderStrategy;
 import lab9.sortingStratagy.ConstructorSorter;
@@ -14,6 +15,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,6 +61,7 @@ public class Window extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
         menu.add(initMenuItem("Open"));
+        menu.add(initMenuSaveItem("Save"));
 
         menuBar.add(menu);
         this.setJMenuBar(menuBar);
@@ -89,6 +92,35 @@ public class Window extends JFrame {
                     }
                     catch (NumberFormatException ignored) {
                     }
+                }
+            }
+        });
+
+        return menuItem;
+    }
+
+    private JMenuItem initMenuSaveItem(String text){
+        JMenuItem menuItem = new JMenuItem(text);
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setAcceptAllFileFilterUsed(false);
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("xml documents", "xml"));
+                if (fileChooser.showSaveDialog(Window.this) == JFileChooser.APPROVE_OPTION){
+                    try {
+                        DOMWriter.write(sortedTableModel.getDataVector(), fileChooser.getSelectedFile());
+                    } catch (ParserConfigurationException e) {
+                        JOptionPane.showMessageDialog(Window.this, "Internal error", e.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    } catch (IOException e) {
+                        JOptionPane.showMessageDialog(Window.this, "Inappropriate path", e.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    } catch (TransformerException e) {
+                        throw new RuntimeException(e);
+                    } catch (SAXException e) {
+                        JOptionPane.showMessageDialog(Window.this, "Data is corrupted", e.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
             }
         });

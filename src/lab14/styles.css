@@ -1,0 +1,29 @@
+div {
+    text-align: center;
+}
+
+.a-div-holder{
+    text-align: center;
+
+}
+
+.text-alignement{
+    text-align: left;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+button{
+    border: 0ch;
+    font-size: medium;
+    margin: 1%;
+    background-color: lightblue;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+button:hover{
+    border: 0ch;
+    font-size: medium;
+    margin: 1%;
+    background-color:violet;
+}

@@ -26,4 +26,10 @@ public class ShopAssistant extends Employee{
                 super.toString() +
                 '}';
     }
+
+    @Override
+    public String[] toStringArray() {
+        return new String[]{this.surname, this.organization, String.valueOf(this.coefficient), String.valueOf(this.money)};
+
+    }
 }

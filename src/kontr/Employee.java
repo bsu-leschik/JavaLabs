@@ -43,4 +43,6 @@ public abstract class Employee {
                 ", coefficient=" + coefficient +
                 '}';
     }
+
+    public abstract String[] toStringArray();
 }

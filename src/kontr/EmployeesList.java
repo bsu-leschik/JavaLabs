@@ -5,18 +5,13 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 
 public class EmployeesList {
-    public static ArrayList<Employee> getEmployeesBySalary(ArrayList<Employee> list) throws IllegalArgumentException{
+    public static ArrayList<Employee> getEmployeesBySalary(ArrayList<? extends Employee> list) throws IllegalArgumentException{
         checkArguments(list);
-        return new ArrayList<>(list.stream().sorted(new Comparator<Employee>() {
-            @Override
-            public int compare(Employee o1, Employee o2) {
-                return o1.getSalary() - o2.getSalary();
-            }
-        }).toList());
+        return new ArrayList<>(list.stream().sorted(Comparator.comparingInt(Employee::getSalary)).toList());
 
     }
 
-    public static ArrayList<Employee> getEmployeesBySalaryAndCoefficient(ArrayList<Employee> list) throws IllegalArgumentException{
+    public static ArrayList<Employee> getEmployeesBySalaryAndCoefficient(ArrayList<? extends Employee> list) throws IllegalArgumentException{
         checkArguments(list);
         return new ArrayList<>(list.stream().sorted(new Comparator<Employee>() {
             @Override
@@ -27,7 +22,7 @@ public class EmployeesList {
 
     }
 
-    public static ArrayList<String> getCompaniesStartingWithB(ArrayList<Employee> list) throws IllegalArgumentException{
+    public static ArrayList<String> getCompaniesStartingWithB(ArrayList<? extends Employee> list) throws IllegalArgumentException{
         checkArguments(list);
         ArrayList<String> bCompanies = new ArrayList<>();
         list.stream().forEach(new Consumer<Employee>() {
@@ -43,7 +38,7 @@ public class EmployeesList {
         return bCompanies;
     }
 
-    public static double countAverageSalary(ArrayList<Employee> list, String company) throws IllegalArgumentException{
+    public static double countAverageSalary(ArrayList<? extends Employee> list, String company) throws IllegalArgumentException{
         checkArguments(list);
         final double[] averageSalary = {0};
         final double[] amountOfEmployees = {0};
@@ -62,7 +57,7 @@ public class EmployeesList {
         return averageSalary[0] / amountOfEmployees[0];
     }
 
-    private static void checkArguments(ArrayList<Employee> list) throws IllegalArgumentException{
+    private static void checkArguments(ArrayList<? extends Employee> list) throws IllegalArgumentException{
         if (list == null || list.size() == 0){
             throw new IllegalArgumentException("Employees list is empty or null");
         }
